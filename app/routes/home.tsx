@@ -1,4 +1,5 @@
 import type { Route } from "./+types/home";
+import { contarVisita } from "../lib/visitas.server";
 import { Hero } from "../components/hero/Hero";
 import { MecanismoSection } from "../components/mecanismo/MecanismoSection";
 import { SobresaltoSection } from "../components/sobresalto/SobresaltoSection";
@@ -21,7 +22,11 @@ export function meta({}: Route.MetaArgs) {
 	];
 }
 
-export default function Home() {
+export async function loader({ context, request }: Route.LoaderArgs) {
+	return { visitas: await contarVisita(request, context.cloudflare.env) };
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
 	return (
 		<>
 			<SectionNav />
@@ -36,7 +41,7 @@ export default function Home() {
 				<SolucionSection />
 				<MarcoLegalSection />
 			</main>
-			<Fuentes />
+			<Fuentes visitas={loaderData.visitas} />
 		</>
 	);
 }

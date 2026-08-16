@@ -1,6 +1,11 @@
 import { fuentes } from "../../content/fuentes";
 
-export function Fuentes() {
+interface FuentesProps {
+	/** Total de visitas. Null si el contador no respondió. */
+	visitas: number | null;
+}
+
+export function Fuentes({ visitas }: FuentesProps) {
 	return (
 		<footer id="fuentes" className="bg-tinta py-seccion text-papel">
 			<div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
@@ -35,11 +40,32 @@ export function Fuentes() {
 					))}
 				</ul>
 
-				<p className="mt-12 max-w-[62ch] text-sm leading-relaxed text-papel/50">
-					Esta página es material informativo de divulgación. No constituye
-					asesoría legal ni médica, y no se refiere a ninguna persona en
-					particular.
-				</p>
+				<div className="mt-12 flex flex-col gap-6 border-t border-papel/15 pt-8 sm:flex-row sm:items-end sm:justify-between">
+					<p className="max-w-[52ch] text-sm leading-relaxed text-papel/50">
+						Esta página es material informativo de divulgación. No constituye
+						asesoría legal ni médica, y no se refiere a ninguna persona en
+						particular.
+					</p>
+
+					{visitas === null ? null : (
+						<p className="shrink-0 text-sm text-papel/50 sm:text-right">
+							<span className="block font-display text-3xl text-papel">
+								{visitas.toLocaleString("es-CL")}
+							</span>
+							{visitas === 1 ? "visita" : "visitas"}
+						</p>
+					)}
+				</div>
+
+				{visitas === null ? null : (
+					<p className="mt-6 max-w-[62ch] text-xs leading-relaxed text-papel/40">
+						El contador es propio y no usa servicios de terceros. Cuenta una
+						visita por persona y por día, descartando robots. Para no repetir a
+						la misma persona guarda un hash efímero que se borra al día
+						siguiente: no se almacena la dirección IP ni se sigue a nadie entre
+						visitas.
+					</p>
+				)}
 			</div>
 		</footer>
 	);

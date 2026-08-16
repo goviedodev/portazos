@@ -1,5 +1,7 @@
 import { createRequestHandler } from "react-router";
 
+export { ContadorVisitas } from "./contador";
+
 declare module "react-router" {
 	export interface AppLoadContext {
 		cloudflare: {
