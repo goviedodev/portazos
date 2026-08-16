@@ -85,9 +85,11 @@ export function MecanismoSection() {
 					<p>
 						Además, el golpe concentra buena parte de su energía en frecuencias
 						graves. Los graves son justamente los que mejor atraviesan los
-						muros que sí detienen las voces y la música. Por eso una
-						conversación al otro lado no se entiende, pero un portazo se siente
-						entero.
+						muros que sí detienen las voces y la música.{" "}
+						<strong className="font-semibold text-impacto">
+							Por eso una conversación al otro lado no se entiende, pero un
+							portazo se siente entero.
+						</strong>
 					</p>
 				</Prosa>
 			</div>
