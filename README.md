@@ -1,109 +1,63 @@
-# Welcome to React Router + Cloudflare Workers!
+# Portazos
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
+Página informativa sobre el ruido de los portazos entre viviendas vecinas: por
+qué se escucha en toda la casa y no solo en la habitación de al lado, qué le
+hace al cuerpo de quien lo recibe, por qué afecta especialmente a las personas
+mayores, y por qué la solución toma diez minutos.
 
-![React Router Starter Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/bfdc2f85-e5c9-4c92-128b-3a6711249800/public)
+Está escrita como una apelación respetuosa al vecino: sin nombres, sin
+acusaciones, y con la sección legal al final y en tono informativo. Toda
+afirmación científica o legal se respalda en una fuente enlazada al pie.
 
-<!-- dash-content-start -->
+**En vivo:** https://portazos.goviedo-sevenit.workers.dev
 
-A modern, production-ready template for building full-stack React applications using [React Router](https://reactrouter.com/) and the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/).
+## Contenido
 
-## Features
+1. **El mecanismo** — las tres vías por las que viaja un portazo (pulso de aire,
+   ruido aéreo y ruido estructural) y por qué el muro deja de ser barrera para
+   convertirse en altavoz.
+2. **El sobresalto** — el arco reflejo del tronco encefálico y por qué no hay
+   habituación posible a un ruido impredecible.
+3. **La salud** — evidencia de la OMS sobre sueño, molestia sostenida y efectos
+   cardiovasculares.
+4. **Las personas mayores** — sueño más frágil, más horas en casa y riesgo de
+   caída por sobresalto.
+5. **La solución** — escuadrar la puerta y ajustar el pestillo, más el hábito de
+   acompañar la hoja hasta el final.
+6. **El marco legal** — Ley 21.442 de Copropiedad Inmobiliaria, guía del MINVU, y
+   las precisiones sobre el D.S. 38/2011 y la Ley 21.822.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-- 🔎 Built-in Observability to monitor your Worker
-<!-- dash-content-end -->
+## Stack
 
-## Getting Started
+React Router 7 en modo framework con SSR, corriendo íntegramente dentro de un
+Cloudflare Worker. Tailwind CSS v4 configurado en CSS. Sin runtime de Node.
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/react-router-starter-template
-```
-
-A live public deployment of this template is available at [https://react-router-starter-template.templates.workers.dev](https://react-router-starter-template.templates.workers.dev)
-
-### Installation
-
-Install the dependencies:
+## Desarrollo
 
 ```bash
 npm install
+npm run dev        # http://localhost:5173
 ```
 
-### Development
+| Comando | Qué hace |
+| --- | --- |
+| `npm run dev` | Servidor de desarrollo con HMR |
+| `npm run build` | Compila a `build/client` y `build/server` |
+| `npm run preview` | Compila y sirve el bundle de producción |
+| `npm run typecheck` | Regenera tipos y corre `tsc` |
+| `npm run check` | Typecheck, build y `wrangler deploy --dry-run` |
+| `npm run deploy` | Despliega a Cloudflare Workers |
 
-Start the development server with HMR:
+`npm run deploy` no compila: corre `npm run build` o `npm run check` antes.
 
-```bash
-npm run dev
-```
+## Contador de visitas
 
-Your application will be available at `http://localhost:5173`.
+El conteo es propio, sin servicios de terceros, sobre un Durable Object con
+almacenamiento SQLite (`workers/contador.ts`). Se eligió Durable Object en vez
+de KV porque KV es eventualmente consistente y limita las escrituras por clave,
+de modo que dos visitas simultáneas se perderían.
 
-## Typegen
-
-Generate types for your Cloudflare bindings in `wrangler.json`:
-
-```sh
-npm run typegen
-```
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Previewing the Production Build
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Deployment
-
-If you don't have a Cloudflare account, [create one here](https://dash.cloudflare.com/sign-up)! Go to your [Workers dashboard](https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fworkers-and-pages) to see your [free custom Cloudflare Workers subdomain](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/) on `*.workers.dev`.
-
-Once that's done, you can build your app:
-
-```sh
-npm run build
-```
-
-And deploy it:
-
-```sh
-npm run deploy
-```
-
-To deploy a preview URL:
-
-```sh
-npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
-npx wrangler versions deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+Cuenta una visita por persona y por día. Los robots no incrementan el total. No
+usa cookies: para deduplicar guarda un hash SHA-256 truncado y con sal de IP,
+navegador y fecha, que se borra al día siguiente. No se almacena la dirección IP
+ni se sigue a nadie entre días.

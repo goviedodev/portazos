@@ -18,7 +18,7 @@ npm run build      # react-router build -> build/client + build/server
 npm run preview    # build, then serve the production bundle locally
 npm run cf-typegen # regenerate worker-configuration.d.ts (Env) + .react-router/types
 npm run check      # tsc && build && wrangler deploy --dry-run  — the closest thing to CI here
-npm run deploy     # wrangler deploy (production)
+npm run deploy     # wrangler deploy (production) — does NOT build; run build/check first
 ```
 
 No test runner, linter, or formatter is configured. Before adding one, note the existing style: **tabs** for indentation, double quotes, semicolons.
@@ -31,7 +31,9 @@ Preview deploys: `npx wrangler versions upload`, then `npx wrangler versions dep
 
 **Request path:** `workers/app.ts` is the Worker entrypoint declared in `wrangler.json` (`main`). It creates a React Router `createRequestHandler` over the virtual server build and passes `{ cloudflare: { env, ctx } }` as the load context. `app/entry.server.tsx` streams the SSR response with `renderToReadableStream` (Web Streams — not `renderToPipeableStream`, which needs Node), awaiting `body.allReady` for bots and SPA-mode renders.
 
-**Accessing Cloudflare bindings:** loaders and actions read them off the context, e.g. `context.cloudflare.env.VALUE_FROM_CLOUDFLARE` in `app/routes/home.tsx`. `AppLoadContext` is augmented via `declare module "react-router"` in `workers/app.ts` — extend that interface there if you add anything beyond `cloudflare`.
+**Accessing Cloudflare bindings:** loaders and actions read them off the context, e.g. `context.cloudflare.env.CONTADOR` in `app/routes/home.tsx`. `AppLoadContext` is augmented via `declare module "react-router"` in `workers/app.ts` — extend that interface there if you add anything beyond `cloudflare`.
+
+**Visit counter:** `workers/contador.ts` defines the `ContadorVisitas` Durable Object (SQLite-backed), re-exported from `workers/app.ts` so wrangler can find the class. `app/lib/visitas.server.ts` builds the visitor key and calls it from the home loader. Durable Object rather than KV specifically because KV is eventually consistent and rate-limits writes per key, which loses concurrent increments. Counting rules: one visit per person per day, bots excluded via `isbot`, no cookies — dedup uses a salted SHA-256 of IP + UA + date that is deleted the next day. It fails soft: any error returns `null` and the footer block is omitted rather than breaking the page. Changing the DO class name requires a new entry in the `migrations` array in `wrangler.json`.
 
 **Adding a binding (KV, D1, R2, …):** declare it in `wrangler.json`, then run `npm run cf-typegen` so the `Env` type in `worker-configuration.d.ts` picks it up. That file is generated (~500KB) — never edit it by hand.
 
