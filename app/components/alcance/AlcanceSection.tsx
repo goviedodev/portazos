@@ -7,24 +7,9 @@ interface Caso {
 
 const casos: readonly Caso[] = [
 	{
-		titulo: "Muebles de cocina y clósets",
+		titulo: "Las puertas del auto",
 		cuerpo:
-			"Una puerta de mueble es más chica, pero llega al tope con la misma brusquedad y va atornillada al mismo tabique. Un par de gomas adhesivas la silencian por completo.",
-	},
-	{
-		titulo: "Cosas que se sueltan al suelo",
-		cuerpo:
-			"Un objeto pesado que se deja caer entrega toda su energía al radier de una vez. El piso es continuo entre departamentos: por ahí el golpe viaja incluso mejor que por los muros.",
-	},
-	{
-		titulo: "Sillas y muebles que se arrastran",
-		cuerpo:
-			"El arrastre no sobresalta como un golpe seco, pero es contacto directo con la losa y se escucha entero abajo. Fieltros en las patas y levantar en vez de correr.",
-	},
-	{
-		titulo: "Ventanas y correderas",
-		cuerpo:
-			"Cierran contra un marco duro y suelen quedar a merced de la corriente de aire. Es el mismo caso de la puerta, con menos masa y más vidrio.",
+			"Pesan, cierran con un golpe seco y lo hacen a la altura de las ventanas de la casa. Además caen casi siempre en las peores horas: al salir temprano o al llegar de noche. Se cierran igual apoyándolas con la palma hasta que el pestillo toma.",
 	},
 	{
 		titulo: "Golpes de mantención",
