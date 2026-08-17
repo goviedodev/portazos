@@ -4,7 +4,7 @@ export function MarcoLegalSection() {
 	return (
 		<Section
 			id="marco-legal"
-			numero="06"
+			numero="08"
 			eyebrow="Qué dice la norma en Chile"
 			titulo="Existe un camino formal. Lo razonable es no tener que usarlo."
 			tono="papel"

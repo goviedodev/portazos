@@ -9,6 +9,8 @@ const anclas: readonly Ancla[] = [
 	{ id: "salud", etiqueta: "La salud" },
 	{ id: "personas-mayores", etiqueta: "Personas mayores" },
 	{ id: "solucion", etiqueta: "La solución" },
+	{ id: "nuestra-parte", etiqueta: "Nuestra parte" },
+	{ id: "alcance", etiqueta: "Más allá de la puerta" },
 	{ id: "marco-legal", etiqueta: "La norma" },
 ];
 

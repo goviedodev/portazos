@@ -6,6 +6,8 @@ import { SobresaltoSection } from "../components/sobresalto/SobresaltoSection";
 import { SaludSection } from "../components/salud/SaludSection";
 import { PersonasMayoresSection } from "../components/mayores/PersonasMayoresSection";
 import { SolucionSection } from "../components/solucion/SolucionSection";
+import { NuestraParteSection } from "../components/nuestra-parte/NuestraParteSection";
+import { AlcanceSection } from "../components/alcance/AlcanceSection";
 import { MarcoLegalSection } from "../components/legal/MarcoLegalSection";
 import { SectionNav } from "../components/layout/SectionNav";
 import { Fuentes } from "../components/layout/Fuentes";
@@ -39,6 +41,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 				<SaludSection />
 				<PersonasMayoresSection />
 				<SolucionSection />
+				<NuestraParteSection />
+				<AlcanceSection />
 				<MarcoLegalSection />
 			</main>
 			<Fuentes visitas={loaderData.visitas} />
