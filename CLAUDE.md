@@ -18,7 +18,7 @@ npm run build      # react-router build -> build/client + build/server
 npm run preview    # build, then serve the production bundle locally
 npm run cf-typegen # regenerate worker-configuration.d.ts (Env) + .react-router/types
 npm run check      # tsc && build && wrangler deploy --dry-run  — the closest thing to CI here
-npm run deploy     # wrangler deploy (production) — does NOT build; run build/check first
+npm run deploy     # build + wrangler deploy (production)
 ```
 
 No test runner, linter, or formatter is configured. Before adding one, note the existing style: **tabs** for indentation, double quotes, semicolons.

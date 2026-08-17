@@ -46,9 +46,7 @@ npm run dev        # http://localhost:5173
 | `npm run preview` | Compila y sirve el bundle de producción |
 | `npm run typecheck` | Regenera tipos y corre `tsc` |
 | `npm run check` | Typecheck, build y `wrangler deploy --dry-run` |
-| `npm run deploy` | Despliega a Cloudflare Workers |
-
-`npm run deploy` no compila: corre `npm run build` o `npm run check` antes.
+| `npm run deploy` | Compila y despliega a Cloudflare Workers |
 
 ## Contador de visitas
 
